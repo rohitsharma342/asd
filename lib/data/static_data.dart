@@ -1,45 +1,58 @@
-import '../models/reservation_model.dart';
+import '../models/menu_item_model.dart';
+import '../models/order_model.dart';
 
 class StaticData {
-  static List<ReservationModel> reservations = [
-    ReservationModel(
-      id: 'res_001',
-      userId: 'user1',
-      date: DateTime.now().add(const Duration(days: 2)),
-      time: '19:00',
-      guests: 4,
-      status: 'confirmed',
-      specialRequests: 'Window seat preferred',
+  static List<String> categories = [
+    'All',
+    'Appetizers',
+    'Main Course',
+    'Desserts',
+    'Beverages',
+    'Specials',
+  ];
+
+  static List<MenuItemModel> menuItems = [
+    MenuItemModel(
+      id: '1',
+      name: 'Margherita Pizza',
+      description: 'Classic pizza with tomato sauce, mozzarella, and fresh basil',
+      price: 12.99,
+      category: 'Main Course',
+      imageUrl: 'https://via.placeholder.com/300x200',
+      isAvailable: true,
+      isTrending: true,
     ),
-    ReservationModel(
-      id: 'res_002',
-      userId: 'user1',
-      date: DateTime.now().add(const Duration(days: 5)),
-      time: '20:00',
-      guests: 2,
-      status: 'confirmed',
+    MenuItemModel(
+      id: '2',
+      name: 'Caesar Salad',
+      description: 'Fresh romaine lettuce with Caesar dressing and croutons',
+      price: 8.99,
+      category: 'Appetizers',
+      imageUrl: 'https://via.placeholder.com/300x200',
+      isAvailable: true,
+      isTrending: false,
+    ),
+    MenuItemModel(
+      id: '3',
+      name: 'Chocolate Lava Cake',
+      description: 'Warm chocolate cake with a molten center',
+      price: 6.99,
+      category: 'Desserts',
+      imageUrl: 'https://via.placeholder.com/300x200',
+      isAvailable: true,
+      isTrending: true,
+    ),
+    MenuItemModel(
+      id: '4',
+      name: 'Fresh Orange Juice',
+      description: 'Freshly squeezed orange juice',
+      price: 4.99,
+      category: 'Beverages',
+      imageUrl: 'https://via.placeholder.com/300x200',
+      isAvailable: true,
+      isTrending: false,
     ),
   ];
 
-  static List<String> timeSlots = [
-    '11:00',
-    '11:30',
-    '12:00',
-    '12:30',
-    '13:00',
-    '13:30',
-    '14:00',
-    '14:30',
-    '17:00',
-    '17:30',
-    '18:00',
-    '18:30',
-    '19:00',
-    '19:30',
-    '20:00',
-    '20:30',
-    '21:00',
-    '21:30',
-    '22:00',
-  ];
+  static List<OrderModel> orders = [];
 }
