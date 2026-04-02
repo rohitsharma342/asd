@@ -13,7 +13,7 @@ class ReservationModel {
     required this.date,
     required this.time,
     required this.guests,
-    this.status = 'pending',
+    required this.status,
     this.specialRequests,
   });
 

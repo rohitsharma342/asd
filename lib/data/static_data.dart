@@ -1,74 +1,41 @@
-import '../models/order_model.dart';
-import '../models/menu_item_model.dart';
 import '../models/reservation_model.dart';
-import '../models/cart_item_model.dart';
-import '../models/user_model.dart';
 
 class StaticData {
-  static List<MenuItemModel> menuItems = [
-    MenuItemModel(
-      id: 'menu_1',
-      name: 'Classic Burger',
-      description: 'Juicy beef patty with fresh lettuce, tomato, and our special sauce',
-      price: 12.99,
-      imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500',
-      category: 'Main Course',
-      isAvailable: true,
-      isTrending: true,
+  static List<ReservationModel> reservations = [
+    ReservationModel(
+      id: 'res_001',
+      userId: 'user1',
+      date: DateTime.now().add(const Duration(days: 2)),
+      time: '18:00',
+      guests: 4,
+      status: 'confirmed',
+      specialRequests: 'Window seat preferred',
     ),
-    MenuItemModel(
-      id: 'menu_2',
-      name: 'Caesar Salad',
-      description: 'Fresh romaine lettuce with parmesan cheese and croutons',
-      price: 9.99,
-      imageUrl: 'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=500',
-      category: 'Appetizers',
-      isAvailable: true,
-      isTrending: false,
-    ),
-    MenuItemModel(
-      id: 'menu_3',
-      name: 'Margherita Pizza',
-      description: 'Classic Italian pizza with fresh mozzarella and basil',
-      price: 14.99,
-      imageUrl: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=500',
-      category: 'Main Course',
-      isAvailable: true,
-      isTrending: true,
-    ),
-    MenuItemModel(
-      id: 'menu_4',
-      name: 'Chocolate Lava Cake',
-      description: 'Warm chocolate cake with a molten center',
-      price: 7.99,
-      imageUrl: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=500',
-      category: 'Desserts',
-      isAvailable: true,
-      isTrending: true,
-    ),
-    MenuItemModel(
-      id: 'menu_5',
-      name: 'Fresh Lemonade',
-      description: 'Refreshing homemade lemonade with mint',
-      price: 4.99,
-      imageUrl: 'https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=500',
-      category: 'Beverages',
-      isAvailable: true,
-      isTrending: false,
+    ReservationModel(
+      id: 'res_002',
+      userId: 'user1',
+      date: DateTime.now().add(const Duration(days: 5)),
+      time: '19:30',
+      guests: 2,
+      status: 'confirmed',
     ),
   ];
 
-  static List<OrderModel> orders = [];
-
-  static List<ReservationModel> reservations = [];
-
-  static List<String> categories = [
-    'All',
-    'Appetizers',
-    'Main Course',
-    'Desserts',
-    'Beverages',
+  static List<String> timeSlots = [
+    '11:00',
+    '11:30',
+    '12:00',
+    '12:30',
+    '13:00',
+    '13:30',
+    '17:00',
+    '17:30',
+    '18:00',
+    '18:30',
+    '19:00',
+    '19:30',
+    '20:00',
+    '20:30',
+    '21:00',
   ];
-
-  static UserModel? currentUser;
 }
