@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'config/theme.dart';
 import 'config/routes.dart';
 
-class AsdRestaurantApp extends StatelessWidget {
-  const AsdRestaurantApp({super.key});
+class ResshopApp extends StatelessWidget {
+  const ResshopApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'asd Restaurant',
+      title: 'Resshop',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       initialRoute: AppRoutes.splash,
@@ -16,3 +16,6 @@ class AsdRestaurantApp extends StatelessWidget {
     );
   }
 }
+
+// Keeping the old class name as an alias for backward compatibility
+typedef AsdRestaurantApp = ResshopApp;
