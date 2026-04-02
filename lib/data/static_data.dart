@@ -1,58 +1,23 @@
-import '../models/menu_item_model.dart';
-import '../models/order_model.dart';
+import '../models/reservation_model.dart';
 
 class StaticData {
-  static List<String> categories = [
-    'All',
-    'Appetizers',
-    'Main Course',
-    'Desserts',
-    'Beverages',
-    'Specials',
-  ];
+  static List<ReservationModel> reservations = [];
 
-  static List<MenuItemModel> menuItems = [
-    MenuItemModel(
-      id: '1',
-      name: 'Classic Burger',
-      description: 'Juicy beef patty with fresh vegetables',
-      price: 12.99,
-      category: 'Main Course',
-      imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd',
-      isAvailable: true,
-      isTrending: true,
-    ),
-    MenuItemModel(
-      id: '2',
-      name: 'Caesar Salad',
-      description: 'Fresh romaine lettuce with Caesar dressing',
-      price: 8.99,
-      category: 'Appetizers',
-      imageUrl: 'https://images.unsplash.com/photo-1546793665-c74683f339c1',
-      isAvailable: true,
-      isTrending: false,
-    ),
-    MenuItemModel(
-      id: '3',
-      name: 'Chocolate Cake',
-      description: 'Rich chocolate layer cake',
-      price: 6.99,
-      category: 'Desserts',
-      imageUrl: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587',
-      isAvailable: true,
-      isTrending: true,
-    ),
-    MenuItemModel(
-      id: '4',
-      name: 'Fresh Lemonade',
-      description: 'Homemade lemonade with mint',
-      price: 3.99,
-      category: 'Beverages',
-      imageUrl: 'https://images.unsplash.com/photo-1523677011781-c91d1bbe2f9c',
-      isAvailable: true,
-      isTrending: false,
-    ),
+  static final List<String> timeSlots = [
+    '11:00 AM',
+    '11:30 AM',
+    '12:00 PM',
+    '12:30 PM',
+    '1:00 PM',
+    '1:30 PM',
+    '2:00 PM',
+    '6:00 PM',
+    '6:30 PM',
+    '7:00 PM',
+    '7:30 PM',
+    '8:00 PM',
+    '8:30 PM',
+    '9:00 PM',
+    '9:30 PM',
   ];
-
-  static List<OrderModel> orders = [];
 }
