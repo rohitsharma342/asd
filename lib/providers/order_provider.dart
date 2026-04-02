@@ -6,9 +6,11 @@ import '../data/static_data.dart';
 class OrderProvider with ChangeNotifier {
   List<OrderModel> _orders = [];
   bool _isLoading = false;
+  String? _error;
 
   List<OrderModel> get orders => _orders;
   bool get isLoading => _isLoading;
+  String? get error => _error;
 
   OrderProvider() {
     loadOrders();
@@ -16,13 +18,20 @@ class OrderProvider with ChangeNotifier {
 
   Future<void> loadOrders() async {
     _isLoading = true;
+    _error = null;
     notifyListeners();
 
-    await Future.delayed(const Duration(milliseconds: 500));
-    _orders = List.from(StaticData.orders);
-    
-    _isLoading = false;
-    notifyListeners();
+    try {
+      await Future.delayed(const Duration(milliseconds: 500));
+      _orders = List.from(StaticData.orders);
+      _error = null;
+    } catch (e) {
+      _error = e.toString();
+      _orders = [];
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
   Future<OrderModel> createOrder(List<CartItemModel> items, double total, {String? notes}) async {
@@ -55,5 +64,9 @@ class OrderProvider with ChangeNotifier {
       _orders[index] = _orders[index].copyWith(status: status);
       notifyListeners();
     }
+  }
+
+  Future<void> refreshOrders() async {
+    await loadOrders();
   }
 }

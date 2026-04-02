@@ -27,6 +27,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _notificationCount = 3;
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<OrderProvider>(context, listen: false).loadOrders();
+    });
+  }
+
+  @override
   void dispose() {
     _searchController.dispose();
     super.dispose();
@@ -451,73 +459,76 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildReservationsTab(BuildContext context) {
     return Consumer<ReservationProvider>(
       builder: (context, reservationProvider, _) {
-        return CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              floating: true,
-              title: const Text('My Reservations'),
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.reservation);
-                  },
-                ),
-              ],
-            ),
-            if (reservationProvider.isLoading)
-              const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else if (reservationProvider.reservations.isEmpty)
-              SliverFillRemaining(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.calendar_today_outlined,
-                        size: 80,
-                        color: AppTheme.textSecondary.withOpacity(0.5),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'No reservations yet',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: AppTheme.textSecondary,
-                            ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextButton.icon(
-                        onPressed: () {
-                          Navigator.pushNamed(context, AppRoutes.reservation);
-                        },
-                        icon: const Icon(Icons.add),
-                        label: const Text('Make a Reservation'),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            else
-              SliverPadding(
-                padding: const EdgeInsets.all(20),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final reservation = reservationProvider.reservations[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: ReservationCard(reservation: reservation)
-                            .animate()
-                            .fadeIn(delay: Duration(milliseconds: 100 * index)),
-                      );
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          body: CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                floating: true,
+                title: const Text('My Reservations'),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.add),
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoutes.reservation);
                     },
-                    childCount: reservationProvider.reservations.length,
+                  ),
+                ],
+              ),
+              if (reservationProvider.isLoading)
+                const SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
+                )
+              else if (reservationProvider.reservations.isEmpty)
+                SliverFillRemaining(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.calendar_today_outlined,
+                          size: 80,
+                          color: AppTheme.textSecondary.withOpacity(0.5),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'No reservations yet',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: AppTheme.textSecondary,
+                              ),
+                        ),
+                        const SizedBox(height: 8),
+                        TextButton.icon(
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRoutes.reservation);
+                          },
+                          icon: const Icon(Icons.add),
+                          label: const Text('Make a Reservation'),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              else
+                SliverPadding(
+                  padding: const EdgeInsets.all(20),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final reservation = reservationProvider.reservations[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 16),
+                          child: ReservationCard(reservation: reservation)
+                              .animate()
+                              .fadeIn(delay: Duration(milliseconds: 100 * index)),
+                        );
+                      },
+                      childCount: reservationProvider.reservations.length,
+                    ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         );
       },
     );
@@ -526,75 +537,121 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget _buildOrdersTab(BuildContext context) {
     return Consumer<OrderProvider>(
       builder: (context, orderProvider, _) {
-        return CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              floating: true,
-              title: const Text('My Orders'),
-              actions: [
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.orderPlacement);
-                  },
+        return Scaffold(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          body: RefreshIndicator(
+            onRefresh: () => orderProvider.refreshOrders(),
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  floating: true,
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  title: const Text('My Orders'),
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.add),
+                      onPressed: () {
+                        Navigator.pushNamed(context, AppRoutes.orderPlacement);
+                      },
+                    ),
+                  ],
                 ),
+                if (orderProvider.isLoading)
+                  SliverFillRemaining(
+                    child: Container(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      child: const Center(child: CircularProgressIndicator()),
+                    ),
+                  )
+                else if (orderProvider.error != null)
+                  SliverFillRemaining(
+                    child: Container(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.error_outline,
+                              size: 80,
+                              color: AppTheme.errorColor.withOpacity(0.5),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'Something went wrong',
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    color: AppTheme.textSecondary,
+                                  ),
+                            ),
+                            const SizedBox(height: 8),
+                            TextButton.icon(
+                              onPressed: () {
+                                orderProvider.refreshOrders();
+                              },
+                              icon: const Icon(Icons.refresh),
+                              label: const Text('Try Again'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                else if (orderProvider.orders.isEmpty)
+                  SliverFillRemaining(
+                    child: Container(
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.receipt_long_outlined,
+                              size: 80,
+                              color: AppTheme.textSecondary.withOpacity(0.5),
+                            ),
+                            const SizedBox(height: 16),
+                            Text(
+                              'No orders yet',
+                              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    color: AppTheme.textSecondary,
+                                  ),
+                            ),
+                            const SizedBox(height: 8),
+                            TextButton.icon(
+                              onPressed: () {
+                                setState(() {
+                                  _currentIndex = 0;
+                                });
+                              },
+                              icon: const Icon(Icons.restaurant_menu),
+                              label: const Text('Browse Menu'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                else
+                  SliverPadding(
+                    padding: const EdgeInsets.all(20),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final order = orderProvider.orders[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 16),
+                            child: OrderCard(order: order)
+                                .animate()
+                                .fadeIn(delay: Duration(milliseconds: 100 * index)),
+                          );
+                        },
+                        childCount: orderProvider.orders.length,
+                      ),
+                    ),
+                  ),
               ],
             ),
-            if (orderProvider.isLoading)
-              const SliverFillRemaining(
-                child: Center(child: CircularProgressIndicator()),
-              )
-            else if (orderProvider.orders.isEmpty)
-              SliverFillRemaining(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.receipt_long_outlined,
-                        size: 80,
-                        color: AppTheme.textSecondary.withOpacity(0.5),
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        'No orders yet',
-                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                              color: AppTheme.textSecondary,
-                            ),
-                      ),
-                      const SizedBox(height: 8),
-                      TextButton.icon(
-                        onPressed: () {
-                          setState(() {
-                            _currentIndex = 0;
-                          });
-                        },
-                        icon: const Icon(Icons.restaurant_menu),
-                        label: const Text('Browse Menu'),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            else
-              SliverPadding(
-                padding: const EdgeInsets.all(20),
-                sliver: SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final order = orderProvider.orders[index];
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 16),
-                        child: OrderCard(order: order)
-                            .animate()
-                            .fadeIn(delay: Duration(milliseconds: 100 * index)),
-                      );
-                    },
-                    childCount: orderProvider.orders.length,
-                  ),
-                ),
-              ),
-          ],
+          ),
         );
       },
     );
