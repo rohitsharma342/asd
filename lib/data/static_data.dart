@@ -1,58 +1,45 @@
-import '../models/menu_item_model.dart';
-import '../models/order_model.dart';
+import '../models/reservation_model.dart';
 
 class StaticData {
-  static List<String> categories = [
-    'All',
-    'Appetizers',
-    'Main Course',
-    'Desserts',
-    'Beverages',
-    'Salads',
-  ];
-
-  static List<MenuItemModel> menuItems = [
-    MenuItemModel(
-      id: '1',
-      name: 'Margherita Pizza',
-      description: 'Classic pizza with tomato sauce, mozzarella, and basil',
-      price: 12.99,
-      category: 'Main Course',
-      imageUrl: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400',
-      isTrending: true,
-      isAvailable: true,
+  static List<ReservationModel> reservations = [
+    ReservationModel(
+      id: 'res_1',
+      userId: 'user1',
+      date: DateTime.now().add(const Duration(days: 2)),
+      time: '19:00',
+      guests: 4,
+      status: 'confirmed',
+      specialRequests: 'Window seat preferred',
     ),
-    MenuItemModel(
-      id: '2',
-      name: 'Caesar Salad',
-      description: 'Fresh romaine lettuce with Caesar dressing and croutons',
-      price: 8.99,
-      category: 'Salads',
-      imageUrl: 'https://images.unsplash.com/photo-1546793665-c74683f339c1?w=400',
-      isTrending: false,
-      isAvailable: true,
-    ),
-    MenuItemModel(
-      id: '3',
-      name: 'Chocolate Lava Cake',
-      description: 'Warm chocolate cake with a molten center',
-      price: 6.99,
-      category: 'Desserts',
-      imageUrl: 'https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400',
-      isTrending: true,
-      isAvailable: true,
-    ),
-    MenuItemModel(
-      id: '4',
-      name: 'Fresh Orange Juice',
-      description: 'Freshly squeezed orange juice',
-      price: 4.99,
-      category: 'Beverages',
-      imageUrl: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=400',
-      isTrending: false,
-      isAvailable: true,
+    ReservationModel(
+      id: 'res_2',
+      userId: 'user1',
+      date: DateTime.now().add(const Duration(days: 5)),
+      time: '20:00',
+      guests: 2,
+      status: 'confirmed',
     ),
   ];
 
-  static List<OrderModel> orders = [];
+  static List<String> timeSlots = [
+    '11:00',
+    '11:30',
+    '12:00',
+    '12:30',
+    '13:00',
+    '13:30',
+    '14:00',
+    '14:30',
+    '17:00',
+    '17:30',
+    '18:00',
+    '18:30',
+    '19:00',
+    '19:30',
+    '20:00',
+    '20:30',
+    '21:00',
+    '21:30',
+    '22:00',
+  ];
 }
