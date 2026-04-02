@@ -1,23 +1,48 @@
-import '../models/reservation_model.dart';
+import '../models/menu_item_model.dart';
+import '../models/order_model.dart';
 
 class StaticData {
-  static List<ReservationModel> reservations = [];
-
-  static final List<String> timeSlots = [
-    '11:00 AM',
-    '11:30 AM',
-    '12:00 PM',
-    '12:30 PM',
-    '1:00 PM',
-    '1:30 PM',
-    '2:00 PM',
-    '6:00 PM',
-    '6:30 PM',
-    '7:00 PM',
-    '7:30 PM',
-    '8:00 PM',
-    '8:30 PM',
-    '9:00 PM',
-    '9:30 PM',
+  static List<String> categories = [
+    'All',
+    'Appetizers',
+    'Main Course',
+    'Desserts',
+    'Beverages',
+    'Salads',
   ];
+
+  static List<MenuItemModel> menuItems = [
+    MenuItemModel(
+      id: '1',
+      name: 'Classic Burger',
+      description: 'Juicy beef patty with fresh vegetables',
+      price: 12.99,
+      category: 'Main Course',
+      imageUrl: 'https://via.placeholder.com/300x200',
+      isAvailable: true,
+      isTrending: true,
+    ),
+    MenuItemModel(
+      id: '2',
+      name: 'Caesar Salad',
+      description: 'Fresh romaine lettuce with parmesan',
+      price: 8.99,
+      category: 'Salads',
+      imageUrl: 'https://via.placeholder.com/300x200',
+      isAvailable: true,
+      isTrending: false,
+    ),
+    MenuItemModel(
+      id: '3',
+      name: 'Chocolate Cake',
+      description: 'Rich chocolate cake with ganache',
+      price: 6.99,
+      category: 'Desserts',
+      imageUrl: 'https://via.placeholder.com/300x200',
+      isAvailable: true,
+      isTrending: true,
+    ),
+  ];
+
+  static List<OrderModel> orders = [];
 }
